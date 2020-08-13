@@ -1,0 +1,16 @@
+{
+    "name": "com.dgn.XR.Extensions",
+    "references": [
+        "GUID:f6f65fd977843394f9f0168d17ed476b",
+        "GUID:fe685ec1767f73d42b749ea8045bfe43"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

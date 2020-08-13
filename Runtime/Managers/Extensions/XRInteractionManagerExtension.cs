@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
+using UnityEngine.XR.Interaction.Toolkit;
 
-namespace UnityEngine.XR.Interaction.Toolkit
+namespace com.dgn.XR.Extensions
 {
     public static class XRInteractionManagerExtension 
     {
