@@ -60,3 +60,6 @@ crashlytics-build.properties
 
 # Exception
 !Example.unitypackage
+
+# Never ignore .obj model file
+!/[Aa]ssets/**/*.obj
