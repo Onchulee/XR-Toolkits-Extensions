@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using com.dgn.UnityAttributes;
+using UnityEngine;
 
 namespace com.dgn.XR.Extensions
 {
