@@ -9,16 +9,25 @@
         "Toolkits",
         "Extensions"
     ],
-    "author": {
-        "name": "Dragan O. Wip",
-        "email": "onchulee.wip@hotmail.com",
-        "url": "https://github.com/Onchulee/XR-Toolkits-Extensions#readme"
-    },
     "samples": [
         {
             "displayName": "Example Project",
             "description": "Example project that shows how to use my XR toolkits extensions",
             "path": "Samples~/Sample"
         }
-    ]
+    ],
+    "author": {
+        "name": "Dragan O. Wip",
+        "email": "onchulee.wip@hotmail.com",
+        "url": "https://github.com/Onchulee/XR-Toolkits-Extensions#readme"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Onchulee/XR-Toolkits-Extensions.git"
+    },
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Onchulee/XR-Toolkits-Extensions/issues"
+    },
+    "homepage": "https://github.com/Onchulee/XR-Toolkits-Extensions#readme"
 }
