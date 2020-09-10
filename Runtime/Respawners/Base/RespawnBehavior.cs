@@ -44,16 +44,19 @@ namespace com.dgn.XR.Extensions
         {
             if (config && enableRespawn)
             {
+                // case fall from floor
                 if (transform.position.y < config.fallZone)
                 {
                     count = 0;
                     respawnTimer = 0;
                     Respawn();
                 }
+                // case rb stop move
                 if (count > 0 && rb.IsSleeping()) {
                     count = 0;
                     respawnTimer = config.respawnTime;
                 }
+                // case respawn timer over
                 if (respawnTimer > 0)
                 {
                     respawnTimer -= Time.deltaTime;
@@ -67,8 +70,11 @@ namespace com.dgn.XR.Extensions
 
         protected virtual void OnCollisionEnter(Collision collision)
         {
-            if (IsInLayerMask(collision.gameObject.layer) && respawnTimer <= 0) {
+            if (IsInLayerMask(collision.gameObject.layer)) {
                 count = count+1;
+                if (respawnTimer <= 0) {
+                    respawnTimer = config.respawnTime > 0? config.respawnTime : 1f;
+                }
             }
         }
 
@@ -76,6 +82,9 @@ namespace com.dgn.XR.Extensions
         {
             if (IsInLayerMask(collision.gameObject.layer)) {
                 count = Mathf.Max(count-1, 0);
+                if (count <= 0) {
+                    respawnTimer = 0;
+                }
             }
         }
 
