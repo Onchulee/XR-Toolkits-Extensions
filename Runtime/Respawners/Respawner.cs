@@ -19,6 +19,7 @@ namespace com.dgn.XR.Extensions
         public Transform respawnAt;
         [SerializeField]
         private bool disableWhenIsKinematic;
+
         public bool DisableWhenIsKinematic
         {
             get { return disableWhenIsKinematic; }

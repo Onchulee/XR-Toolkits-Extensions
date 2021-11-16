@@ -66,7 +66,9 @@ namespace com.dgn.XR.Extensions
         }
 
         private void UpdateInteractor() {
-            interactor.enableInteractions = interactor.selectTarget || (interactables.Count > 0);
+            bool enableInteractions = interactor.selectTarget || (interactables.Count > 0);
+            interactor.allowHover = enableInteractions; 
+            interactor.allowSelect = enableInteractions;
         }
     }
 }

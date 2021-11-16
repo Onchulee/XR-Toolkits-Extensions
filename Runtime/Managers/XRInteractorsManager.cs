@@ -21,13 +21,13 @@ namespace com.dgn.XR.Extensions
         {
             [SerializeField]
             public XRBaseInteractor interactor;
-            private UnityAction<XRBaseInteractable> onSelectAction;
-            private UnityAction<XRBaseInteractable> onUnselectAction;
+            private UnityAction<SelectEnterEventArgs> onSelectAction;
+            private UnityAction<SelectExitEventArgs> onUnselectAction;
             private bool active = false;
 
             public XRInteractorConfig(XRBaseInteractor baseInteractor,
-                UnityAction<XRBaseInteractable> selectAction,
-                UnityAction<XRBaseInteractable> unselectAction)
+                UnityAction<SelectEnterEventArgs> selectAction,
+                UnityAction<SelectExitEventArgs> unselectAction)
             {
                 interactor = baseInteractor;
                 onSelectAction = selectAction;
@@ -38,8 +38,8 @@ namespace com.dgn.XR.Extensions
             {
                 if (interactor && !active)
                 {
-                    if (onSelectAction != null) interactor?.onSelectEnter.AddListener(onSelectAction);
-                    if (onUnselectAction != null) interactor?.onSelectExit.AddListener(onUnselectAction);
+                    if (onSelectAction != null) interactor?.selectEntered.AddListener(onSelectAction);
+                    if (onUnselectAction != null) interactor?.selectExited.AddListener(onUnselectAction);
                     active = true;
                 }
             }
@@ -48,8 +48,8 @@ namespace com.dgn.XR.Extensions
             {
                 if (interactor && active)
                 {
-                    if (onSelectAction != null) interactor?.onSelectEnter.RemoveListener(onSelectAction);
-                    if (onUnselectAction != null) interactor?.onSelectExit.RemoveListener(onUnselectAction);
+                    if (onSelectAction != null) interactor?.selectEntered.RemoveListener(onSelectAction);
+                    if (onUnselectAction != null) interactor?.selectExited.RemoveListener(onUnselectAction);
                     active = false;
                 }
             }
@@ -148,7 +148,11 @@ namespace com.dgn.XR.Extensions
         {
             foreach (XRBaseInteractor interactor in interactors)
             {
-                if (interactor) interactor.enableInteractions = (interactor == ignore);
+                if (interactor) {
+                    bool enableInteractions = (interactor == ignore);
+                    interactor.allowHover = enableInteractions;
+                    interactor.allowSelect = enableInteractions;
+                }
             }
         }
 
@@ -156,7 +160,11 @@ namespace com.dgn.XR.Extensions
         {
             foreach (XRBaseInteractor interactor in interactors)
             {
-                if (interactor) interactor.enableInteractions = true;
+                if (interactor) {
+                    interactor.allowHover = true;
+                    interactor.allowSelect = true;
+
+                }
             }
         }
 

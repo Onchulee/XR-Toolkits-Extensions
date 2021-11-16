@@ -26,22 +26,22 @@ namespace com.dgn.XR.Extensions
         void Start()
         {
             grabInteractable = this.GetComponent<XRGrabInteractable>();
-            grabInteractable.onSelectEnter.AddListener(OnGrabbed);
-            grabInteractable.onSelectExit.AddListener(OnReleased);
+            grabInteractable.selectEntered.AddListener(OnGrabbed);
+            grabInteractable.selectExited.AddListener(OnReleased);
         }
 
-        void OnGrabbed(XRBaseInteractor rBaseInteractor)
+        void OnGrabbed(SelectEnterEventArgs args)
         {
             attachTransform = grabInteractable.attachTransform;
             if (attachTransform)
             {
                 mLocalRot_attachTransform = attachTransform.localRotation;
             }
-            xrInteractor = rBaseInteractor;
-            handPresence = rBaseInteractor.attachTransform.GetComponentInChildren<HandPresence>();
+            xrInteractor = args.interactor;
+            handPresence = args.interactor.attachTransform.GetComponentInChildren<HandPresence>();
         }
 
-        void OnReleased(XRBaseInteractor rBaseInteractor)
+        void OnReleased(SelectExitEventArgs args)
         {
             if (attachTransform)
             {
@@ -99,8 +99,8 @@ namespace com.dgn.XR.Extensions
             {
                 attachTransform.localRotation = mLocalRot_attachTransform;
             }
-            grabInteractable.onSelectEnter.RemoveListener(OnGrabbed);
-            grabInteractable.onSelectExit.RemoveListener(OnReleased);
+            grabInteractable.selectEntered.RemoveListener(OnGrabbed);
+            grabInteractable.selectExited.RemoveListener(OnReleased);
         }
     }
 }

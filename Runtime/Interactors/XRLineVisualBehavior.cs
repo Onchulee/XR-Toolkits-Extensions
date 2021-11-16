@@ -35,8 +35,8 @@ namespace com.dgn.XR.Extensions
             {
                 if (interactor)
                 {
-                    interactor.onSelectEnter.AddListener(OnGrab);
-                    interactor.onSelectExit.AddListener(OnRelease);
+                    interactor.selectEntered.AddListener(OnGrab);
+                    interactor.selectExited.AddListener(OnRelease);
                 }
             }
             isInitialized = true;
@@ -49,19 +49,19 @@ namespace com.dgn.XR.Extensions
             {
                 if (interactor)
                 {
-                    interactor.onSelectEnter.RemoveListener(OnGrab);
-                    interactor.onSelectExit.RemoveListener(OnRelease);
+                    interactor.selectEntered.RemoveListener(OnGrab);
+                    interactor.selectExited.RemoveListener(OnRelease);
                 }
             }
             isInitialized = false;
         }
 
-        private void OnGrab(XRBaseInteractable baseInteractable)
+        private void OnGrab(SelectEnterEventArgs args)
         {
             if (xrLineVisual) xrLineVisual.enabled = false;
         }
 
-        private void OnRelease(XRBaseInteractable baseInteractable)
+        private void OnRelease(SelectExitEventArgs args)
         {
             if (xrLineVisual) xrLineVisual.enabled = true;
         }

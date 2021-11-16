@@ -29,23 +29,23 @@ namespace com.dgn.XR.Extensions
 
         private void OnEnable()
         {
-            grabInteractable.onSelectEnter.AddListener(OnGrabbed);
-            grabInteractable.onSelectExit.AddListener(OnReleased);
+            grabInteractable.selectEntered.AddListener(OnGrabbed);
+            grabInteractable.selectExited.AddListener(OnReleased);
         }
 
         private void OnDisable()
         {
-            grabInteractable.onSelectEnter.RemoveListener(OnGrabbed);
-            grabInteractable.onSelectEnter.RemoveListener(OnReleased);
+            grabInteractable.selectEntered.RemoveListener(OnGrabbed);
+            grabInteractable.selectExited.RemoveListener(OnReleased);
         }
 
-        private void OnGrabbed(XRBaseInteractor rBaseInteractor)
+        private void OnGrabbed(SelectEnterEventArgs eventArgs)
         {
             SetEnableRespawn(false);
             respawnTimer = 0;
         }
 
-        private void OnReleased(XRBaseInteractor rBaseInteractor)
+        private void OnReleased(SelectExitEventArgs eventArgs)
         {
             SetEnableRespawn(true);
             respawnTimer = 0;

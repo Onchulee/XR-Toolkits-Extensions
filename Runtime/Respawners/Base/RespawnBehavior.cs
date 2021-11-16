@@ -14,7 +14,12 @@ namespace com.dgn.XR.Extensions
 
         [SerializeField]
         protected RespawnConfig config;
-        
+
+        [SerializeField]
+        [OnEditorModeInspector]
+        [Tooltip("True = Always check respawn")]
+        protected bool burstMode;
+
         [SerializeField]
         [OnRuntimeInspector]
         [ReadOnly]
@@ -51,8 +56,10 @@ namespace com.dgn.XR.Extensions
                     respawnTimer = 0;
                     Respawn();
                 }
+
                 // case rb stop move
-                if (count > 0 && rb.IsSleeping()) {
+                if (count > 0 && rb.IsSleeping())
+                {
                     count = 0;
                     respawnTimer = config.respawnTime;
                 }
@@ -68,9 +75,17 @@ namespace com.dgn.XR.Extensions
             }
         }
 
+        protected void FixedUpdate()
+        {
+            // According to Unity: Order of Execution
+            // Fixed Update will call before OnCollisionXXX
+            // so we will reset to recount collsion in burst mode
+            if (burstMode == true) count = 0;
+        }
+
         protected virtual void OnCollisionEnter(Collision collision)
         {
-            if (IsInLayerMask(collision.gameObject.layer)) {
+            if (burstMode == false && IsInLayerMask(collision.gameObject.layer)) {
                 count = count+1;
                 if (respawnTimer <= 0) {
                     respawnTimer = config.respawnTime > 0? config.respawnTime : 1f;
@@ -78,9 +93,20 @@ namespace com.dgn.XR.Extensions
             }
         }
 
+        protected virtual void OnCollisionStay(Collision collision) {
+            if (burstMode == true && IsInLayerMask(collision.gameObject.layer))
+            {
+                count = count + 1;
+                if (respawnTimer <= 0)
+                {
+                    respawnTimer = config.respawnTime > 0 ? config.respawnTime : 1f;
+                }
+            }
+        }
+
         protected virtual void OnCollisionExit(Collision collision)
         {
-            if (IsInLayerMask(collision.gameObject.layer)) {
+            if (burstMode == false && IsInLayerMask(collision.gameObject.layer)) {
                 count = Mathf.Max(count-1, 0);
                 if (count <= 0) {
                     respawnTimer = 0;
